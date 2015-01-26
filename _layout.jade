@@ -1,10 +1,27 @@
 extends _base
 
 block main
-  .container
-    != partial('_nav')
+  != partial('_nav')
 
-    main.content
+  main
 
-      block content
+    .container
+      if current.path[0] === "index"
         != yield
+
+      else
+        if current.path[0] === "blog"
+          //- Show blog post
+          if current.path[1] === "posts"
+            != partial("/blog/_blog")
+          else
+            //- show blog teaser
+            != yield
+
+        //- Events
+        if current.path[0] === "events"
+          if current.path[1] === "event"
+            != partial("/events/_event")
+          else
+            != yield
+
